@@ -13,6 +13,10 @@
  *
  */
 void GPIO_Init(GPIO_Handle_t* pGPIOHandle){
+
+    /* Enable GPIO clock */
+    GPIO_Clock_Ctrl(pGPIOHandle->pGPIOx, 1);
+    
 	/* Configure GPIO mode */
 	uint32_t temp = 0;
 	if (pGPIOHandle->GPIO_PinConfig.GPIO_PinMode < GPIO_MODE_IT_FT) {
