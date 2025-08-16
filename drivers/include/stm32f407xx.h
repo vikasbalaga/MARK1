@@ -241,6 +241,9 @@ typedef struct {
 
 #define SYSCFG_CLK_DISABLE()		(RCC->APB2ENR &= ~(1 << 14))
 
+/* NVIC IRQ Numbers */
+
+
 /* EXTI IRQ Numbers */
 #define EXTI0_IRQ_NUM			6
 #define EXTI1_IRQ_NUM			7
@@ -249,6 +252,11 @@ typedef struct {
 #define EXTI4_IRQ_NUM			10
 #define EXTI9_5_IRQ_NUM			23
 #define EXTI15_10_IRQ_NUM		40
+
+/* SPI IRQ Numbers */
+#define SPI1_IRQ_NUM			35
+#define SPI2_IRQ_NUM			36
+#define SPI3_IRQ_NUM			51
 
 #define NO_PRIORITY_BITS_IMPLEMENTED 4
 

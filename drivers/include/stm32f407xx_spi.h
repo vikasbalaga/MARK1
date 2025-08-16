@@ -8,6 +8,7 @@
 #ifndef INCLUDE_STM32F407XX_SPI_H_
 #define INCLUDE_STM32F407XX_SPI_H_
 
+#include <stddef.h>
 #include <stdbool.h>
 #include "stm32f407xx.h"
 
@@ -21,9 +22,19 @@ typedef struct {
 	uint8_t SPI_SSM;					/*!< possible values from @SPI_SSM_FLAGS>*/
 } SPI_Config_t;
 
+typedef void (*spi_callback_t)(void*, uint8_t);
+
 typedef struct {
-	SPI_TypeDef* pSPIx;
-	SPI_Config_t SPI_Config;
+	SPI_TypeDef* pSPIx;					/*!< SPI peripheral device ID>*/
+	SPI_Config_t SPI_Config;			/*!< SPI Config>*/
+	uint8_t* TxBuffer;					/*!< TX buffer pointer used in non blocking mode>*/
+	uint8_t* RxBuffer;					/*!< RX buffer pointer used in non blocking mode>*/
+	uint32_t TxLen;						/*!< TX buffer pointer length used in non blocking mode>*/
+	uint32_t RxLen;						/*!< RX buffer pointer length used in non blocking mode>*/
+	uint8_t Tx_State;					/*!< SPI transmission state used in non blocking mode>*/
+	uint8_t Rx_State;					/*!< SPI receive state used in non blocking mode>*/
+	spi_callback_t cb_fn;				/*!< SPI call back function pointer>*/
+	void* cb_params;					/*!< SPI call back function params>*/
 } SPI_Handle_t;
 
 /* SPI peripheral enable and disable macros */
@@ -111,9 +122,9 @@ typedef struct {
 #define SPI_CR2_TXDMAEN_BIT 1
 #define SPI_CR2_SSOE_BIT 2
 #define SPI_CR2_FRF_BIT 4		//Bit 3 and bits (9-15) are reserved
-#define SPI_CR2_ERRIE_BIT 6
-#define SPI_CR2_RXNEIE_BIT 7
-#define SPI_CR2_TXEIE_BIT 8
+#define SPI_CR2_ERRIE_BIT 5
+#define SPI_CR2_RXNEIE_BIT 6
+#define SPI_CR2_TXEIE_BIT 7
 
 /* SPI SR register bit position definiitons */
 #define SPI_SR_RXNE_BIT 0
@@ -125,6 +136,20 @@ typedef struct {
 #define SPI_SR_OVR_BIT 6
 #define SPI_SR_BSY_BIT 7
 #define SPI_SR_FRE_BIT 8
+
+/*
+ * SPI device state used in interrupt mode
+ */
+#define SPI_READY 0
+#define SPI_BUSY_RX 1
+#define SPI_BUSY_TX 2
+
+/*
+ * SPI event flags used in interrupt mode
+ */
+#define SPI_TX_COMPLETE 0
+#define SPI_RX_COMPLETE 1
+#define SPI_OVR_ERR 2
 
 /* SPI register reset macros */
 #define SPI1_REG_RESET()		do {\
@@ -205,6 +230,28 @@ void SPI_Tx_Blocking(SPI_TypeDef* pSPIx, uint8_t* TxBuffer, uint32_t len);
  *
  */
 void SPI_Rx_Blocking(SPI_TypeDef* pSPIx, uint8_t* RxBuffer, uint32_t len);
+
+/**
+ * @brief  SPI data transmit API (Non Blocking mode)
+ *
+ * @param  pSPIHandle - SPI handle
+ * @param  TxBuffer   - buffer holding data to be transmitted
+ * @param  len        - lenght of the data to be transmitted
+ * @return status     - SPI device state
+ *
+ */
+uint8_t SPI_Tx_NonBlocking(SPI_Handle_t* pSPIHandle, uint8_t* TxBuffer, uint32_t len);
+
+/**
+ * @brief  SPI data receive API (Non Blocking mode)
+ *
+ * @param  pSPIHandle - SPI handle
+ * @param  RxBuffer   - buffer to hold the received data
+ * @param  len        - lenght of the data to be received
+ * @return status     - SPI device state
+ *
+ */
+uint8_t SPI_Rx_NonBlocking(SPI_Handle_t* pSPIHandle, uint8_t* RxBuffer, uint32_t len);
 
 /**
  * @brief  API to configure SPI IRQ
