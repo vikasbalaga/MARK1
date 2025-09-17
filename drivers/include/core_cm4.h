@@ -90,7 +90,7 @@ typedef struct {
     __IO uint32_t AFSR;                  /*!< Auxiliary fault status register, Address offset: 0x3C */
 } SCB_TypeDef;
 
-#define SCB                             ((SCB_TypeDef*)0xE00ED000)
+#define SCB                             ((SCB_TypeDef*)0xE000ED00)
 
 /* Define clock sources and their frequency */
 #define HSI_CLK                         (16000000U) /* 16 MHz */
