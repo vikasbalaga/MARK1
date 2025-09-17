@@ -9,13 +9,19 @@
 #define INCLUDE_STM32F407XX_H_
 
 #include <stdint.h>
-#define __IO 					volatile
 #include "core_cm4.h"
 
 /* Base addresses of FLASH, SRAM and ROM memories */
 #define FLASH_BASE				0x08000000U /* 0x08000000-0x080FFFFF 1 MB */
+
 #define SRAM1_BASE				0x20000000U /* 0x20000000-0x2001BFFF 128 KB */
+#define SRAM_SIZE               (128 * 1024)/* 128 KB */
+#define SRAM_END                SRAM1_BASE + SRAM_SIZE
+
 #define SRAM2_BASE				0x08000000U /* 0x2001C000-0x2001FFFF 16 KB */
+#define SRAM2_SIZE              (16 * 1024) /* 16 KB */
+#define SRAM2_END               SRAM2_BASE + SRAM2_SIZE
+
 #define SRAM 					SRAM1_BASE
 #define ROM_BASE				0x1FFF0000U /* 0x1FFF0000-0x1FFF77FF 30 KB */
 
