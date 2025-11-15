@@ -9,6 +9,8 @@
 #define INCLUDE_STM32F407XX_H_
 
 #include <stdint.h>
+#include <stddef.h>
+#include <stdbool.h>
 #include "core_cm4.h"
 
 /* Base addresses of FLASH, SRAM and ROM memories */
@@ -51,18 +53,18 @@
 /* Base addresses of peripherals on APB1 bus
  * TO DO : Complete for other peripherals
  */
-#define SPI2_BASE				(APB1_BASE + 0X3800) /* GPIOA base addr (0x40020000-0x400203FF) */
-#define SPI3_BASE				(APB1_BASE + 0X3C00) /* GPIOA base addr (0x40020000-0x400203FF) */
+#define SPI2_BASE				(APB1_BASE + 0X3800) /* SPI2 base addr (0x40003800-0x40003BFF) */
+#define SPI3_BASE				(APB1_BASE + 0X3C00) /* SPI3 base addr (0x40003C00-0x40003FFF) */
 
-#define USART2_BASE				(APB1_BASE + 0X4400) /* GPIOA base addr (0x40020000-0x400203FF) */
-#define USART3_BASE				(APB1_BASE + 0X4800) /* GPIOA base addr (0x40020000-0x400203FF) */
+#define USART2_BASE				(APB1_BASE + 0X4400) /* USART2 base addr (0x40004400-0x400047FF) */
+#define USART3_BASE				(APB1_BASE + 0X4800) /* USART3 base addr (0x40004800-0x40004BFF) */
 
-#define UART4_BASE				(APB1_BASE + 0X4C00) /* GPIOA base addr (0x40020000-0x400203FF) */
-#define UART5_BASE				(APB1_BASE + 0X5000) /* GPIOA base addr (0x40020000-0x400203FF) */
+#define UART4_BASE				(APB1_BASE + 0X4C00) /* UART4 base addr (0x40004C00-0x40004FFF) */
+#define UART5_BASE				(APB1_BASE + 0X5000) /* UART5 base addr (0x40005000-0x400053FF) */
 
-#define I2C1_BASE				(APB1_BASE + 0X5400) /* GPIOA base addr (0x40020000-0x400203FF) */
-#define I2C2_BASE				(APB1_BASE + 0X5800) /* GPIOA base addr (0x40020000-0x400203FF) */
-#define I2C3_BASE				(APB1_BASE + 0X5C00) /* GPIOA base addr (0x40020000-0x400203FF) */
+#define I2C1_BASE				(APB1_BASE + 0X5400) /* I2C1 base addr (0x40005400-0x400057FF) */
+#define I2C2_BASE				(APB1_BASE + 0X5800) /* I2C2 base addr (0x40005800-0x40005BFF) */
+#define I2C3_BASE				(APB1_BASE + 0X5C00) /* I2C3 base addr (0x40005C00-0x40005FFF) */
 
 /* Base addresses of peripherals on APB2 bus
  * TO DO : Complete for other peripherals
@@ -138,6 +140,11 @@ typedef struct {
 /* Peripheral definiton for RCC */
 #define RCC						((RCC_TypeDef*)RCC_BASE)
 
+/* Define clock sources and their frequency */
+#define HSI_CLK                         (16000000U) /* 16 MHz */
+#define LSI_CLK                         (32000U)    /* 32 kHz */
+#define HSE_CLK                         (8000000U)  /* 8 MHz */
+#define LSE_CLK                         (32768U)    /* 32.768 kHz */
 
 /* Structure definiton for EXTI */
 typedef struct {
@@ -180,6 +187,25 @@ typedef struct {
 #define SPI2						((SPI_TypeDef*)SPI2_BASE)
 #define SPI3						((SPI_TypeDef*)SPI3_BASE)
 #define SPI4						((SPI_TypeDef*)SPI4_BASE)
+
+/* Structure definiton for I2C */
+typedef struct {
+	__IO uint32_t CR1;			/*!< I2C control register 1, Address offset: 0x00 */
+	__IO uint32_t CR2;			/*!< I2C control register 2, Address offset: 0x04 */
+	__IO uint32_t OAR1;			/*!< I2C own address register 1, Address offset: 0x08 */
+	__IO uint32_t OAR2;			/*!< I2C own address register 2, Address offset: 0x0C */
+	__IO uint32_t DR;			/*!< I2C data register, Address offset: 0x10 */
+	__IO uint32_t SR1;			/*!< I2C status register 1, Address offset: 0x14 */
+	__IO uint32_t SR2;			/*!< I2C status register 2, Address offset: 0x18 */
+	__IO uint32_t CCR;			/*!< I2C clock control register, Address offset: 0x1C */
+	__IO uint32_t TRISE;		/*!< I2C TRISE regitser, Address offset: 0x20 */
+	__IO uint32_t FLTR;			/*!< I2C FLTR regitser, Address offset: 0x24 */	
+} I2C_TypeDef;
+
+/* Peripheral definiton for I2C */
+#define I2C1						((I2C_TypeDef*)I2C1_BASE)
+#define I2C2						((I2C_TypeDef*)I2C2_BASE)
+#define I2C3						((I2C_TypeDef*)I2C3_BASE)
 
 #define GPIO_DECODE_TO_EXTI(x)		((x == GPIOA)? 0 : \
 									(x == GPIOB)? 1 : \
@@ -263,6 +289,16 @@ typedef struct {
 #define SPI1_IRQ_NUM			35
 #define SPI2_IRQ_NUM			36
 #define SPI3_IRQ_NUM			51
+
+/* I2C IRQ Numbers */
+#define I2C1_EV_IRQ_NUM         31
+#define I2C1_ERR_IRQ_NUM        32
+
+#define I2C2_EV_IRQ_NUM         33
+#define I2C2_ERR_IRQ_NUM        34
+
+#define I2C3_EV_IRQ_NUM         72
+#define I2C3_ERR_IRQ_NUM        73
 
 #define NO_PRIORITY_BITS_IMPLEMENTED 4
 

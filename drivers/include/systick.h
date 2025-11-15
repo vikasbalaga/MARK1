@@ -9,6 +9,7 @@
 #define INCLUDE_SYSTICK_H_
 
 #include "core_cm4.h"
+#include "stm32f407xx.h"
 
 /* By default SysTick runs with HSI clock */
 #define SYSTICK_CLK                 HSI_CLK

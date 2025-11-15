@@ -92,8 +92,4 @@ typedef struct {
 
 #define SCB                             ((SCB_TypeDef*)0xE000ED00)
 
-/* Define clock sources and their frequency */
-#define HSI_CLK                         (16000000U) /* 16 MHz */
-
-
 #endif /* INCLUDE_CORE_CM4_H_ */
