@@ -504,35 +504,35 @@ void I2C_IRQHandler(I2C_Handle_t* pI2CHandle) {
     // Check for bus error
     if (erren && I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_SR1_BERR_BIT)) {
         // Clear the flag and notify application
-        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_BERR_BIT)
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_BERR_BIT);
         I2C_Evt_Callback(pI2CHandle, I2C_EVT_BERR);
     }
     
     // Check for ARLO error
     if (erren && I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_SR1_ARLO_BIT)) {
         // Clear the flag and notify application
-        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_ARLO_BIT)
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_ARLO_BIT);
         I2C_Evt_Callback(pI2CHandle, I2C_EVT_ARLO);
     }
 
     // Check for AF error
     if (erren && I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_SR1_AF_BIT)) {
         // Clear the flag and notify application
-        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_AF_BIT)
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_AF_BIT);
         I2C_Evt_Callback(pI2CHandle, I2C_EVT_AF);
     }
 
     // Check for OVR error
     if (erren && I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_SR1_OVR_BIT)) {
         // Clear the flag and notify application
-        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_OVR_BIT)
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_OVR_BIT);
         I2C_Evt_Callback(pI2CHandle, I2C_EVT_OVR);
     }
 
     // Check for TIMEOUT error
     if (erren && I2C_GetFlagStatus(pI2CHandle->pI2Cx, I2C_SR1_TIMEOUT_BIT)) {
         // Clear the flag and notify application
-        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_TIMEOUT_BIT)
+        pI2CHandle->pI2Cx->SR1 &= ~(1 << I2C_SR1_TIMEOUT_BIT);
         I2C_Evt_Callback(pI2CHandle, I2C_EVT_TIMEOUT);
     }
 }

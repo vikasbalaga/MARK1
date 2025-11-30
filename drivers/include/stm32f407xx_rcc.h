@@ -28,7 +28,7 @@ uint32_t RCC_Get_Sysclk(void);
  * @return hclk1 - AHB1 Clock value in Hz
  *
  */
-uint32_t RCC_GetHCLK1(void);
+uint32_t RCC_GetHCLK(void);
 
 /**
  * @brief  Get APB1 Clock value
@@ -37,6 +37,14 @@ uint32_t RCC_GetHCLK1(void);
  *
  */
 uint32_t RCC_GetPCLK1(void);
+
+/**
+ * @brief  Get APB2 Clock value
+ *
+ * @return pclk2 - APB2 Clock value in Hz
+ *
+ */
+uint32_t RCC_GetPCLK2(void);
 
 /**
  * @brief  Get PLL Clock value

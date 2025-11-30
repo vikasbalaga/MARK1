@@ -10,7 +10,7 @@
 uint16_t HCLK_PreScaler[] = {1, 2, 4, 8, 16, 64, 128, 256, 512};
 
 //APB1 clock prescaler values
-uint8_t PCLK1_PreScaler[] = {1, 2, 4, 8, 16};
+uint8_t PCLK_PreScaler[] = {1, 2, 4, 8, 16};
 
 /**
  * @brief  Get clock source freq
@@ -47,11 +47,11 @@ uint32_t RCC_GetPLLClk(void) {
 /**
  * @brief  Get AHB1 Clock value
  *
- * @return hclk1 - AHB1 Clock value in Hz
+ * @return hclk - AHB1 Clock value in Hz
  *
  */
-uint32_t RCC_GetHCLK1(void) {
-    uint32_t temp, sys_clk, hclk1;
+uint32_t RCC_GetHCLK(void) {
+    uint32_t temp, sys_clk, hclk;
     uint16_t hclk_presc;
     sys_clk = RCC_Get_Sysclk();
     
@@ -62,8 +62,8 @@ uint32_t RCC_GetHCLK1(void) {
     else
         temp -= 7;
     hclk_presc = HCLK_PreScaler[temp];
-    hclk1 = sys_clk / hclk_presc;
-    return hclk1;
+    hclk = sys_clk / hclk_presc;
+    return hclk;
 }
 
 /**
@@ -73,18 +73,39 @@ uint32_t RCC_GetHCLK1(void) {
  *
  */
 uint32_t RCC_GetPCLK1(void) {
-    uint32_t temp, hclk1, pclk1;
-    uint8_t pclk_presc;
-    hclk1 = RCC_GetHCLK1();
+    uint32_t temp, hclk, pclk1;
+    uint8_t pclk1_presc;
+    hclk = RCC_GetHCLK();
     
     //Get APB1 prescaler value
-    temp = ((RCC->CFGR >> 10) & 0x3);
+    temp = ((RCC->CFGR >> 10) & 0x7);
     if (temp <= 3)
         temp = 0;
     else
         temp -= 3;
-    pclk_presc = PCLK1_PreScaler[temp];
-    pclk1 = hclk1 / pclk_presc;
+    pclk1_presc = PCLK_PreScaler[temp];
+    pclk1 = hclk / pclk1_presc;
     return pclk1;
 }
 
+/**
+ * @brief  Get APB2 Clock value
+ *
+ * @return pclk1 - APB2 Clock value in Hz
+ *
+ */
+uint32_t RCC_GetPCLK2(void) {
+    uint32_t temp, hclk, pclk2;
+    uint8_t pclk2_presc;
+    hclk = RCC_GetHCLK();
+    
+    //Get APB2 prescaler value
+    temp = ((RCC->CFGR >> 10) & 0x7);
+    if (temp <= 3)
+        temp = 0;
+    else
+        temp -= 3;
+    pclk2_presc = PCLK_PreScaler[temp];
+    pclk2 = hclk / pclk2_presc;
+    return pclk2;
+}
