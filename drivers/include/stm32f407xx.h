@@ -207,6 +207,25 @@ typedef struct {
 #define I2C2						((I2C_TypeDef*)I2C2_BASE)
 #define I2C3						((I2C_TypeDef*)I2C3_BASE)
 
+/* Structure definition for USART/UART */
+typedef struct {
+    __IO uint32_t SR;			/*!< USART status register, Address offset: 0x00 */
+    __IO uint32_t DR;			/*!< USART data register, Address offset: 0x04 */
+    __IO uint32_t BRR;			/*!< USART baud rate register, Address offset: 0x08 */
+    __IO uint32_t CR1;			/*!< USART control register 1, Address offset: 0x0C */
+    __IO uint32_t CR2;			/*!< USART control register 2, Address offset: 0x10 */
+    __IO uint32_t CR3;			/*!< USART control register 3, Address offset: 0x14 */
+    __IO uint32_t GTPR;			/*!< USART guard time and prescaler register, Address offset: 0x18 */
+} USART_TypeDef;
+
+/* Peripheral definition for USART */
+#define USART1                      ((USART_TypeDef*)USART1_BASE)
+#define USART2                      ((USART_TypeDef*)USART2_BASE)
+#define USART3                      ((USART_TypeDef*)USART3_BASE)
+#define UART4                       ((USART_TypeDef*)UART4_BASE)
+#define UART5                       ((USART_TypeDef*)UART5_BASE)
+#define USART6                      ((USART_TypeDef*)USART6_BASE)
+
 #define GPIO_DECODE_TO_EXTI(x)		((x == GPIOA)? 0 : \
 									(x == GPIOB)? 1 : \
 									(x == GPIOC)? 2 : \
